@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shree Ram Mandir Darshan Ayodhya - Booking, Donation & Seva</title>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+  body { background: #1a0f05; color: #fff; overflow-x: hidden; }
+  nav { position: fixed; top: 0; width: 100%; padding: 12px 30px; display: flex; justify-content: space-between; align-items: center; background: rgba(26,15,5,0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 2px solid #ff9933; }
+  nav h1 { background: linear-gradient(90deg, #ff9933, #ffcc00, #ff6600); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 20px; font-weight: bold; }
+  nav ul { display: flex; gap: 15px; list-style: none; flex-wrap: wrap; }
+  nav ul li a { color: #fff; text-decoration: none; transition: 0.3s; font-weight: 500; font-size: 14px; }
+  nav ul li a:hover { color: #ff9933; }
+  .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Ram_Janmbhoomi_Mandir,_Ayodhya_Dham.jpg'); background-size: cover; background-position: center; z-index: 0; }
+  .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(139,0,0,0.85), rgba(255,102,0,0.75), rgba(255,153,51,0.7)); z-index: 1; }
+  .hero-content { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+  .hero-flag { font-size: 60px; margin-bottom: 15px; animation: float 3s ease-in-out infinite; }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+  .hero h2 { font-size: 50px; margin-bottom: 20px; text-shadow: 3px 3px 15px rgba(0,0,0,0.9); }
+  .hero p { font-size: 22px; margin-bottom: 15px; font-style: italic; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+  .hero .shlok { font-size: 20px; margin-bottom: 30px; color: #ffe; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+  .btn { padding: 16px 40px; border: none; border-radius: 40px; background: linear-gradient(90deg, #ff9933, #ffcc00); color: #8B0000; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 8px 25px rgba(255,153,51,0.8); }
+  .btn:hover { transform: scale(1.08); }
+  section { padding: 70px 30px; }
+  section h2 { text-align: center; font-size: 40px; margin-bottom: 15px; background: linear-gradient(90deg, #ff9933, #ffcc00, #ff6600); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .subtitle { text-align: center; color: #ffcc99; margin-bottom: 45px; font-size: 17px; }
+  .ram-darbar { background: linear-gradient(145deg, #2a1505, #3d1f0a); padding: 60px 30px; }
+  .darbar-container { max-width: 900px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .darbar-img { border-radius: 20px; overflow: hidden; border: 4px solid #ffcc00; box-shadow: 0 20px 60px rgba(255,153,51,0.5); transition: 0.4s; }
+  .darbar-img:hover { transform: scale(1.03); }
+  .darbar-img img { width: 100%; height: 400px; object-fit: cover; display: block; }
+  .darbar-text h2 { text-align: left; font-size: 36px; margin-bottom: 20px; background: linear-gradient(90deg, #ffcc00, #ff9933); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .darbar-text p { font-size: 17px; line-height: 1.9; color: #f0d9b5; margin-bottom: 15px; }
+  .darbar-text .shlok-big { font-size: 18px; color: #ffcc00; font-weight: bold; font-style: italic; margin-top: 20px; padding: 15px; border-left: 4px solid #ff9933; background: rgba(255,153,51,0.1); border-radius: 8px; }
+  .about { background: #2a1505; }
+  .about p { max-width: 900px; margin: auto; font-size: 18px; line-height: 1.9; color: #f0d9b5; text-align: center; }
+  .location { background: #1a0f05; }
+  .location-grid { max-width: 1000px; margin: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .loc-card { padding: 25px; text-align: center; border-radius: 15px; background: linear-gradient(145deg, #2a1505, #3d1f0a); border: 2px solid #ff9933; transition: 0.3s; }
+  .loc-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(255,153,51,0.4); }
+  .loc-card .loc-icon { font-size: 40px; margin-bottom: 12px; }
+  .loc-card h3 { color: #ffcc00; margin-bottom: 12px; font-size: 20px; }
+  .loc-card p { color: #f0d9b5; line-height: 1.7; font-size: 15px; }
+  .map-btn { display: block; text-align: center; margin: 30px auto 0; max-width: 320px; padding: 15px 30px; border-radius: 30px; background: linear-gradient(90deg, #ff9933, #ffcc00); color: #8B0000; font-weight: bold; text-decoration: none; transition: 0.3s; font-size: 16px; }
+  .map-btn:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(255,153,51,0.6); }
+  .donation { background: #1a0f05; }
+  .donation-box { max-width: 750px; margin: auto; padding: 40px; background: linear-gradient(145deg, #2a1505, #3d1f0a); border-radius: 20px; border: 2px solid #ff9933; box-shadow: 0 15px 50px rgba(255,153,51,0.3); }
+  .amount-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
+  .amount-options button { padding: 18px 10px; border-radius: 12px; border: 2px solid #ff9933; background: transparent; color: #ffcc00; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+  .amount-options button:hover, .amount-options button.active { background: linear-gradient(90deg, #ff9933, #ffcc00); color: #8B0000; transform: scale(1.05); }
+  .custom-amount-box { margin-bottom: 20px; padding: 15px; background: rgba(255,153,51,0.1); border-radius: 12px; border: 2px dashed #ff9933; }
+  .custom-amount-box label { display: block; color: #ffcc00; margin-bottom: 10px; font-weight: bold; font-size: 15px; }
+  .custom-amount-box input { width: 100%; padding: 14px; border-radius: 10px; border: 2px solid #ff9933; background: #1a0f05; color: #ffcc00; font-size: 20px; font-weight: bold; outline: none; text-align: center; }
+  .custom-amount-box input:focus { border-color: #ffcc00; box-shadow: 0 0 15px rgba(255,204,0,0.5); }
+  .donation-box input[type="text"], .donation-box input[type="email"], .donation-box input[type="tel"], .donation-box textarea { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #ff9933; background: #1a0f05; color: #fff; font-size: 16px; outline: none; }
+  .donation-box input:focus, .donation-box textarea:focus { border-color: #ffcc00; box-shadow: 0 0 10px rgba(255,204,0,0.4); }
+  .upi-section { margin-top: 20px; padding: 25px; border-radius: 15px; background: linear-gradient(145deg, #1a0f05, #2a1505); border: 2px dashed #ff9933; }
+  .upi-section h3 { text-align: center; color: #ffcc00; margin-bottom: 20px; font-size: 22px; }
+  .upi-apps { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 25px; }
+  .upi-app { padding: 12px 20px; border-radius: 30px; background: #fff; color: #333; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 10px; border: 2px solid #e0e0e0; font-size: 15px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+  .upi-app:hover { transform: scale(1.08); box-shadow: 0 8px 25px rgba(255,153,51,0.5); border-color: #ff9933; }
+  .upi-app img { width: 24px; height: 24px; object-fit: contain; display: block; }
+  .qr-box { text-align: center; padding: 20px; background: #fff; border-radius: 15px; max-width: 280px; margin: 0 auto 20px; }
+  #qrcode { display: flex; justify-content: center; }
+  .qr-box .qr-name { color: #8B0000; font-weight: bold; margin-top: 12px; font-size: 14px; }
+  .qr-box .qr-upi { color: #333; font-size: 12px; margin-top: 5px; }
+  .upi-id-box { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+  .upi-id { background: #1a0f05; padding: 12px 20px; border-radius: 10px; border: 1px solid #ff9933; color: #ffcc00; font-family: monospace; font-size: 16px; }
+  .copy-btn { padding: 12px 20px; border-radius: 10px; border: none; background: linear-gradient(90deg, #ff9933, #ffcc00); color: #8B0000; font-weight: bold; cursor: pointer; transition: 0.3s; }
+  .copy-btn:hover { transform: scale(1.05); }
+  .pay-upi-btn { width: 100%; padding: 16px; border-radius: 12px; border: none; background: linear-gradient(90deg, #ff6600, #ff9933, #ffcc00); color: #8B0000; font-size: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+  .pay-upi-btn:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(255,153,51,0.6); }
+  .seva { background: #2a1505; }
+  .aarti { background: #1a0f05; }
+  .darshan { background: #2a1505; }
+  .pandit { background: #1a0f05; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; max-width: 1200px; margin: auto; }
+  .card { padding: 30px; border-radius: 15px; text-align: center; background: linear-gradient(145deg, #1a0f05, #3d1f0a); border: 2px solid #ff9933; transition: 0.4s; cursor: pointer; position: relative; overflow: hidden; }
+  .card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(255,153,51,0.5); border-color: #ffcc00; }
+  .card .icon { font-size: 55px; margin-bottom: 15px; }
+  .card h3 { font-size: 22px; margin-bottom: 10px; color: #ffcc00; }
+  .card p { color: #f0d9b5; line-height: 1.6; margin-bottom: 15px; }
+  .card .seva-amount { display: inline-block; padding: 8px 18px; border-radius: 20px; background: rgba(255,153,51,0.2); color: #ff9933; font-weight: bold; font-size: 14px; margin-bottom: 15px; }
+  .card .seva-btn { display: inline-block; padding: 12px 25px; border-radius: 30px; background: linear-gradient(90deg, #ff9933, #ffcc00); color: #8B0000; font-weight: bold; border: none; cursor: pointer; transition: 0.3s; font-size: 15px; }
+  .card .seva-btn:hover { transform: scale(1.08); }
+  .pandit-card { padding: 25px 20px; }
+  .pandit-card .pandit-img { width: 140px; height: 140px; border-radius: 50%; overflow: hidden; margin: 0 auto 15px; border: 4px solid #ffcc00; box-shadow: 0 10px 30px rgba(255,153,51,0.5); transition: 0.3s; background: #fff; }
+  .pandit-card:hover .pandit-img { transform: scale(1.05); border-color: #ff9933; }
+  .pandit-card .pandit-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pandit-card .pandit-info { color: #ffcc99; font-size: 14px; margin-bottom: 8px; font-weight: 500; }
+  .gallery { background: #1a0f05; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: auto; }
+  .gallery-item { position: relative; border-radius: 15px; overflow: hidden; border: 3px solid #ff9933; transition: 0.4s; cursor: pointer; background: #2a1505; }
+  .gallery-item:hover { transform: scale(1.03); box-shadow: 0 20px 50px rgba(255,153,51,0.6); border-color: #ffcc00; }
+  .gallery-item img { width: 100%; height: 260px; object-fit: cover; display: block; transition: 0.4s; }
+  .gallery-item:hover img { transform: scale(1.1); }
+  .gallery-item .caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.95)); color: #ffcc00; padding: 25px 15px 12px; font-weight: bold; text-align: center; font-size: 16px; }
+  .contact { background: #2a1505; text-align: center; }
+  .contact form { max-width: 500px; margin: auto; display: flex; flex-direction: column; gap: 15px; }
+  .contact input, .contact textarea { padding: 14px; border-radius: 10px; border: 1px solid #ff9933; background: #1a0f05; color: #fff; font-size: 16px; outline: none; }
+  .contact input:focus, .contact textarea:focus { border-color: #ffcc00; }
+  .contact button { padding: 14px; border-radius: 10px; border: none; cursor: pointer; background: linear-gradient(90deg, #ff9933, #ffcc00); color: #8B0000; font-weight: bold; font-size: 16px; transition: 0.3s; }
+  .contact button:hover { transform: scale(1.05); }
+  .whatsapp { position: fixed; bottom: 25px; right: 25px; background: #25D366; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; text-decoration: none; color: #fff; box-shadow: 0 5px 20px rgba(37,211,102,0.5); animation: pulse 2s infinite; z-index: 999; }
+  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+  .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; padding: 20px; overflow-y: auto; }
+  .modal.active { display: flex; }
+  .modal-content { background: linear-gradient(145deg, #2a1505, #3d1f0a); border: 2px solid #ff9933; border-radius: 20px; padding: 30px; max-width: 550px; width: 100%; position: relative; animation: modalIn 0.3s ease; max-height: 95vh; overflow-y: auto; }
+  @keyframes modalIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-content .close { position: absolute; top: 12px; right: 18px; font-size: 30px; cursor: pointer; color: #ff9933; line-height: 1; z-index: 10; }
+  .modal-content .close:hover { color: #ffcc00; }
+  .modal-header { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px dashed #ff9933; }
+  .modal-header .icon { font-size: 50px; }
+  .modal-header h3 { color: #ffcc00; font-size: 26px; margin-top: 10px; }
+  .modal-header p { color: #f0d9b5; font-size: 14px; margin-top: 8px; }
+  .modal-amount-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+  .modal-amount-options button { padding: 12px; border-radius: 10px; border: 2px solid #ff9933; background: transparent; color: #ffcc00; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 15px; }
+  .modal-amount-options button:hover, .modal-amount-options button.active { background: linear-gradient(90deg, #ff9933, #ffcc00); color: #8B0000; }
+  .modal-content input { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 10px; border: 1px solid #ff9933; background: #1a0f05; color: #fff; font-size: 15px; outline: none; }
+  .modal-content input:focus { border-color: #ffcc00; }
+  .modal-upi { margin-top: 20px; padding: 20px; border-radius: 15px; background: rgba(0,0,0,0.3); border: 2px dashed #ff9933; }
+  .modal-upi h4 { text-align: center; color: #ffcc00; margin-bottom: 15px; }
+  .modal-upi .qr-box { max-width: 200px; padding: 12px; margin-bottom: 15px; }
+  #modalQrcode { display: flex; justify-content: center; }
+  footer { background: #0d0600; text-align: center; padding: 30px; color: #ffcc99; border-top: 2px solid #ff9933; }
+  footer .shlok { font-size: 18px; color: #ffcc00; margin-bottom: 15px; font-style: italic; }
+  .socials { margin-top: 15px; display: flex; justify-content: center; gap: 20px; font-size: 22px; }
+  .socials a { color: #ff9933; text-decoration: none; transition: 0.3s; }
+  .socials a:hover { color: #ffcc00; transform: scale(1.2); }
+  @media (max-width: 768px) {
+    .hero h2 { font-size: 30px; }
+    .hero p { font-size: 16px; }
+    .hero .shlok { font-size: 16px; }
+    .hero-flag { font-size: 45px; }
+    section h2 { font-size: 28px; }
+    nav ul { display: none; }
+    nav { padding: 15px 20px; }
+    section { padding: 60px 20px; }
+    .donation-box { padding: 25px; }
+    .amount-options { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .amount-options button { padding: 14px 8px; font-size: 16px; }
+    .modal-amount-options { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item img { height: 200px; }
+    .darbar-container { grid-template-columns: 1fr; gap: 25px; }
+    .darbar-text h2 { text-align: center; font-size: 28px; }
+    .darbar-img img { height: 300px; }
+  }
+</style>
+</head>
+<body>
+
+  <nav>
+    <h1>🚩 श्री राम मंदिर</h1>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#darbar">राम दरबार</a></li>
+      <li><a href="#location">लोकेशन</a></li>
+      <li><a href="#donate">Donate</a></li>
+      <li><a href="#seva">Seva</a></li>
+      <li><a href="#aarti">आरती</a></li>
+      <li><a href="#darshan">दर्शन</a></li>
+      <li><a href="#pandit">पंडित जी</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-flag">🚩</div>
+      <h2>श्री राम जन्मभूमि मंदिर</h2>
+      <p>अयोध्या, उत्तर प्रदेश</p>
+      <p class="shlok">"श्री राम जय राम जय जय राम"</p>
+      <button class="btn" onclick="document.getElementById('donate').scrollIntoView({behavior:'smooth'})">🙏 अब दान करें</button>
+    </div>
+  </div>
+
+  <section class="ram-darbar" id="darbar">
+    <div class="darbar-container">
+      <div class="darbar-img">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ayodhya_Ram_Mandir_Inauguration_Day_Picture.jpg" alt="Ram Mandir Ayodhya" onerror="this.src='https://via.placeholder.com/800x600/8B0000/ffcc00?text=Shree+Ram+Mandir'">
+      </div>
+      <div class="darbar-text">
+        <h2>🚩 श्री राम दरबार</h2>
+        <p>भगवान श्री राम, माता सीता और भ्राता लक्ष्मण — यह पवित्र त्रिदेव भारतीय संस्कृति के आदर्श हैं।</p>
+        <p>प्रभु श्री राम मर्यादा पुरुषोत्तम हैं, माता सीता शक्ति और सहनशीलता की प्रतीक हैं, और लक्ष्मण जी भ्रातृ-प्रेम के अद्वितीय उदाहरण हैं।</p>
+        <div class="shlok-big">"रामं दशरथं विद्धि मां विद्धि जनकात्मजाम्।<br>अयोध्येमां विद्धि गच्छ त्वं मया सह॥"</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <h2>मंदिर के बारे में</h2>
+    <p class="subtitle">श्री राम जन्मभूमि मंदिर — भारत की आस्था का प्रतीक</p>
+    <p>श्री राम जन्मभूमि मंदिर अयोध्या, उत्तर प्रदेश में स्थित है। यह भगवान श्री राम का जन्मस्थान है। यह भव्य मंदिर भारतीय संस्कृति, आस्था और एकता का प्रतीक है। 🙏 आइए, हम सब मिलकर इस पुनीत कार्य में अपना योगदान दें।</p>
+  </section>
+
+  <section class="location" id="location">
+    <h2>📍 मंदिर की लोकेशन</h2>
+    <p class="subtitle">अयोध्या, उत्तर प्रदेश — कैसे पहुंचें</p>
+    <div class="location-grid">
+      <div class="loc-card"><div class="loc-icon">🏠</div><h3>पता</h3><p>127, Ram Mandir Rd,<br>near Ayodhya Railway Station,<br>Sai Nagar, Ayodhya,<br>Uttar Pradesh – 224123</p></div>
+      <div class="loc-card"><div class="loc-icon">🚂</div><h3>रेलवे स्टेशन</h3><p>अयोध्या धाम रेलवे स्टेशन<br>मंदिर से दूरी: ~6 km</p></div>
+      <div class="loc-card"><div class="loc-icon">✈️</div><h3>एयरपोर्ट</h3><p>महर्षि वाल्मीकि<br>अंतरराष्ट्रीय एयरपोर्ट,<br>अयोध्या</p></div>
+      <div class="loc-card"><div class="loc-icon">🕉️</div><h3>दर्शन समय</h3><p>सुबह 7:00 – रात 9:00<br>मंगला आरती: 4:30 AM</p></div>
+    </div>
+    <a href="https://www.google.com/maps/search/Shree+Ramjanmbhumi+Temple+Ayodhya" target="_blank" class="map-btn">📍 Google Maps पर देखें</a>
+  </section>
+
+  <section class="donation" id="donate">
+    <h2>🙏 सामान्य दान करें</h2>
+    <p class="subtitle">₹51 से शुरू — या अपनी राशि लिखें</p>
+    <div class="donation-box">
+      <h3 style="text-align:center; color:#ffcc00; margin-bottom:20px;">अपनी राशि चुनें</h3>
+      <div class="amount-options">
+        <button onclick="selectAmount(this, 51)">₹51</button>
+        <button onclick="selectAmount(this, 101)">₹101</button>
+        <button onclick="selectAmount(this, 251)">₹251</button>
+        <button onclick="selectAmount(this, 501)">₹501</button>
+        <button onclick="selectAmount(this, 1100)">₹1100</button>
+        <button onclick="selectAmount(this, 5100)">₹5100</button>
+      </div>
+      <div class="custom-amount-box">
+        <label>💰 या अपनी राशि लिखें (Custom Amount)</label>
+        <input type="number" id="customAmountInput" placeholder="जैसे: 100, 500, 1000, 5000..." min="1" oninput="updateCustomAmount(this.value)">
+      </div>
+      <input type="text" id="donorName" placeholder="आपका नाम (Full Name)" required>
+      <input type="email" id="donorEmail" placeholder="ईमेल (Email)" required>
+      <input type="tel" id="donorPhone" placeholder="मोबाइल नंबर" pattern="[0-9]{10}" required>
+      <input type="text" id="donorAmount" placeholder="राशि (Amount ₹)" required readonly style="background:#0d0600; color:#ffcc00; font-weight:bold; text-align:center; font-size:18px;">
+      <textarea id="donorAddress" rows="3" placeholder="पता (Address)"></textarea>
+      <div class="upi-section">
+        <h3>💳 UPI से भुगतान करें</h3>
+        <div class="upi-apps">
+          <button class="upi-app" onclick="payWithUPI('phonepe')"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/phonepe-logo-icon.png" alt="PhonePe" onerror="this.style.display='none'">PhonePe</button>
+          <button class="upi-app" onclick="payWithUPI('gpay')"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-pay-icon.png" alt="GPay" onerror="this.style.display='none'">Google Pay</button>
+          <button class="upi-app" onclick="payWithUPI('paytm')"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/paytm-icon.png" alt="Paytm" onerror="this.style.display='none'">Paytm</button>
+          <button class="upi-app" onclick="payWithUPI('bhim')"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/bhim-upi-logo.png" alt="BHIM" onerror="this.style.display='none'">BHIM</button>
+          <button class="upi-app" onclick="payWithUPI('any')"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/upi-icon.png" alt="Any UPI" onerror="this.style.display='none'">Any UPI App</button>
+        </div>
+        <div class="qr-box"><div id="qrcode"></div><p class="qr-name">🚩 Shree Ram Mandir Darshan Ayodhya</p><p class="qr-upi">UPI ID: 810203040@ybl</p></div>
+        <div class="upi-id-box"><span class="upi-id" id="upiIdText">810203040@ybl</span><button class="copy-btn" onclick="copyUPI()">📋 Copy</button></div>
+        <button class="pay-upi-btn" onclick="openPaymentModal()">🚩 UPI से दान करें</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="seva" id="seva">
+    <h2>🪔 सेवा के अवसर</h2>
+    <p class="subtitle">हर सेवा पर click करें और UPI से भुगतान करें</p>
+    <div class="cards">
+      <div class="card" onclick="openBookingModal('दीप दान', '🪔', 51, 'मंदिर में दीपक जलाने में सहयोग करें।')"><div class="icon">🪔</div><h3>दीप दान</h3><p>मंदिर में दीपक जलाने में सहयोग करें।</p><div class="seva-amount">₹51 से शुरू</div><button class="seva-btn">🙏 दान करें</button></div>
+      <div class="card" onclick="openBookingModal('भंडारा सेवा', '🍛', 501, 'भक्तों के लिए भोजन की व्यवस्था करें।')"><div class="icon">🍛</div><h3>भंडारा सेवा</h3><p>भक्तों के लिए भोजन की व्यवस्था करें।</p><div class="seva-amount">₹501 से शुरू</div><button class="seva-btn">🙏 दान करें</button></div>
+      <div class="card" onclick="openBookingModal('शिक्षा सेवा', '📚', 1100, 'बच्चों की शिक्षा में योगदान दें।')"><div class="icon">📚</div><h3>शिक्षा सेवा</h3><p>बच्चों की शिक्षा में योगदान दें।</p><div class="seva-amount">₹1100 से शुरू</div><button class="seva-btn">🙏 दान करें</button></div>
+      <div class="card" onclick="openBookingModal('निर्माण सेवा', '🚩', 2100, 'मंदिर निर्माण में धन या सामग्री दें।')"><div class="icon">🚩</div><h3>निर्माण सेवा</h3><p>मंदिर निर्माण में धन या सामग्री दें।</p><div class="seva-amount">₹2100 से शुरू</div><button class="seva-btn">🙏 दान करें</button></div>
+      <div class="card" onclick="openBookingModal('पूजा सेवा', '🌸', 101, 'पूजा और आरती में सहयोग करें।')"><div class="icon">🌸</div><h3>पूजा सेवा</h3><p>पूजा और आरती में सहयोग करें।</p><div class="seva-amount">₹101 से शुरू</div><button class="seva-btn">🙏 दान करें</button></div>
+      <div class="card" onclick="openBookingModal('गौ सेवा', '🐄', 501, 'गौशाला में गायों की सेवा करें।')"><div class="icon">🐄</div><h3>गौ सेवा</h3><p>गौशाला में गायों की सेवा करें।</p><div class="seva-amount">₹501 से शुरू</div><button class="seva-btn">🙏 दान करें</button></div>
+      <div class="card" onclick="openBookingModal('वस्त्र दान', '👕', 251, 'जरूरतमंदों को वस्त्र दान करें।')"><div class="icon">👕</div><h3>वस्त्र दान</h3><p>जरूरतमंदों को वस्त्र दान करें।</p><div class="seva-amount">₹251 से शुरू</div><button class="seva-btn">🙏 दान करें</button></div>
+      <div class="card" onclick="openBookingModal('विद्या दान', '🎓', 1100, 'विद्यार्थियों की पढ़ाई में सहयोग करें।')"><div class="icon">🎓</div><h3>विद्या दान</h3><p>विद्यार्थियों की पढ़ाई में सहयोग करें।</p><div class="seva-amount">₹1100 से शुरू</div><button class="seva-btn">🙏 दान करें</button></div>
+      <div class="card" onclick="openBookingModal('वृक्षारोपण सेवा', '🌳', 101, 'मंदिर परिसर में वृक्ष लगाएं।')"><div class="icon">🌳</div><h3>वृक्षारोपण सेवा</h3><p>मंदिर परिसर में वृक्ष लगाएं।</p><div class="seva-amount">₹101 से शुरू</div><button class="seva-btn">🙏 दान करें</button></div>
+    </div>
+  </section>
+
+  <section class="aarti" id="aarti">
+    <h2>🪔 आरती बुकिंग</h2>
+    <p class="subtitle">श्री राम मंदिर की पवित्र आरती में सम्मिलित हों</p>
+    <div class="cards">
+      <div class="card" onclick="openBookingModal('मंगला आरती', '🌅', 101, 'सुबह 4:30 AM — भगवान को जगाने की आरती')"><div class="icon">🌅</div><h3>मंगला आरती</h3><p>सुबह 4:30 AM — भगवान को जगाने की आरती</p><div class="seva-amount">₹101 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+      <div class="card" onclick="openBookingModal('श्रृंगार आरती', '🌸', 151, 'सुबह 6:30 AM — भगवान का श्रृंगार')"><div class="icon">🌸</div><h3>श्रृंगार आरती</h3><p>सुबह 6:30 AM — भगवान का श्रृंगार</p><div class="seva-amount">₹151 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+      <div class="card" onclick="openBookingModal('भोग आरती', '🍛', 201, 'दोपहर 12:00 PM — भोग लगाने की आरती')"><div class="icon">🍛</div><h3>भोग आरती</h3><p>दोपहर 12:00 PM — भोग लगाने की आरती</p><div class="seva-amount">₹201 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+      <div class="card" onclick="openBookingModal('संध्या आरती', '🌆', 251, 'शाम 7:00 PM — संध्या की आरती')"><div class="icon">🌆</div><h3>संध्या आरती</h3><p>शाम 7:00 PM — संध्या की आरती</p><div class="seva-amount">₹251 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+      <div class="card" onclick="openBookingModal('शयन आरती', '🌙', 301, 'रात 9:00 PM — भगवान को शयन कराना')"><div class="icon">🌙</div><h3>शयन आरती</h3><p>रात 9:00 PM — भगवान को शयन कराना</p><div class="seva-amount">₹301 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+      <div class="card" onclick="openBookingModal('विशेष आरती', '🚩', 501, 'विशेष दिनों की आरती — त्योहारों पर')"><div class="icon">🚩</div><h3>विशेष आरती</h3><p>विशेष दिनों की आरती — त्योहारों पर</p><div class="seva-amount">₹501 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+    </div>
+  </section>
+
+  <section class="darshan" id="darshan">
+    <h2>🛕 दर्शन बुकिंग</h2>
+    <p class="subtitle">श्री राम लला के दर्शन के लिए स्लॉट बुक करें</p>
+    <div class="cards">
+      <div class="card" onclick="openBookingModal('सुगम दर्शन', '🛕', 51, 'सुबह 7:00 - 11:30 AM — सामान्य दर्शन')"><div class="icon">🛕</div><h3>सुगम दर्शन</h3><p>सुबह 7:00 - 11:30 AM — सामान्य दर्शन</p><div class="seva-amount">₹51 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+      <div class="card" onclick="openBookingModal('विशेष दर्शन', '⭐', 251, 'दोपहर 12:00 - 3:00 PM — विशेष दर्शन')"><div class="icon">⭐</div><h3>विशेष दर्शन</h3><p>दोपहर 12:00 - 3:00 PM — विशेष दर्शन</p><div class="seva-amount">₹251 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+      <div class="card" onclick="openBookingModal('VIP दर्शन', '👑', 501, 'शाम 4:00 - 6:00 PM — तेज़ दर्शन')"><div class="icon">👑</div><h3>VIP दर्शन</h3><p>शाम 4:00 - 6:00 PM — तेज़ दर्शन</p><div class="seva-amount">₹501 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+      <div class="card" onclick="openBookingModal('आरती दर्शन', '🪔', 351, 'आरती के समय विशेष दर्शन')"><div class="icon">🪔</div><h3>आरती दर्शन</h3><p>आरती के समय विशेष दर्शन</p><div class="seva-amount">₹351 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+      <div class="card" onclick="openBookingModal('पूजा दर्शन', '🌸', 1100, 'व्यक्तिगत पूजा + दर्शन')"><div class="icon">🌸</div><h3>पूजा दर्शन</h3><p>व्यक्तिगत पूजा + दर्शन</p><div class="seva-amount">₹1100 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+      <div class="card" onclick="openBookingModal('कुल पूजा दर्शन', '🙏', 2100, 'पूरे परिवार के लिए पूजा + दर्शन')"><div class="icon">🙏</div><h3>कुल पूजा दर्शन</h3><p>पूरे परिवार के लिए पूजा + दर्शन</p><div class="seva-amount">₹2100 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+    </div>
+  </section>
+
+  <section class="pandit" id="pandit">
+    <h2>🙏 हमारे पंडित जी</h2>
+    <p class="subtitle">अनुभवी पंडित जी के साथ पूजा/अनुष्ठान बुक करें</p>
+    <div class="cards">
+      <div class="card pandit-card" onclick="openBookingModal('पंडित श्री राम शर्मा', '🙏', 1100, 'विशेषज्ञता: राम कथा, सत्यनारायण कथा, गृह प्रवेश')"><div class="pandit-img"><img src="https://mypanditbooking.in/assets/images/banner-round.png" alt="Pandit Ji" onerror="this.src='https://via.placeholder.com/400x400/8B0000/ffcc00?text=Pandit+Ji'"></div><h3>पंडित श्री राम शर्मा</h3><p>विशेषज्ञता: राम कथा, सत्यनारायण कथा, गृह प्रवेश</p><div class="pandit-info">📞 +91 98765 43210</div><div class="pandit-info">🎓 25+ वर्ष अनुभव</div><div class="seva-amount">₹1100 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+      <div class="card pandit-card" onclick="openBookingModal('पंडित श्री श्याम तिवारी', '🙏', 1100, 'विशेषज्ञता: विवाह संस्कार, सगाई, मुंडन')"><div class="pandit-img"><img src="https://images.jdmagicbox.com/v2/comp/hyderabad/i2/040pxx40.xx40.220511160834.e3i2/catalogue/pandit-srikanth-joshi-beeramguda-hyderabad-pandits-m6b1b4hztu.jpg" alt="Pandit Ji" onerror="this.src='https://via.placeholder.com/400x400/8B0000/ffcc00?text=Pandit+Ji'"></div><h3>पंडित श्री श्याम तिवारी</h3><p>विशेषज्ञता: विवाह संस्कार, सगाई, मुंडन</p><div class="pandit-info">📞 +91 98765 43211</div><div class="pandit-info">🎓 20+ वर्ष अनुभव</div><div class="seva-amount">₹1100 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+      <div class="card pandit-card" onclick="openBookingModal('पंडित श्री मोहन दुबे', '🙏', 1100, 'विशेषज्ञता: गृह शांति, नवग्रह पूजा, हवन')"><div class="pandit-img"><img src="https://www.onlinepurohiths.com/assets/images/pandit-ji.png" alt="Pandit Ji" onerror="this.src='https://via.placeholder.com/400x400/8B0000/ffcc00?text=Pandit+Ji'"></div><h3>पंडित श्री मोहन दुबे</h3><p>विशेषज्ञता: गृह शांति, नवग्रह पूजा, हवन</p><div class="pandit-info">📞 +91 98765 43212</div><div class="pandit-info">🎓 15+ वर्ष अनुभव</div><div class="seva-amount">₹1100 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+      <div class="card pandit-card" onclick="openBookingModal('पंडित श्री सुरेश पांडेय', '🙏', 1100, 'विशेषज्ञता: रुद्राभिषेक, महामृत्युंजय जाप')"><div class="pandit-img"><img src="https://png.pngtree.com/png-vector/20230906/ourmid/pngtree-indian-priest-pandit-vector-png-image_9931715.png" alt="Pandit Ji" onerror="this.src='https://via.placeholder.com/400x400/8B0000/ffcc00?text=Pandit+Ji'"></div><h3>पंडित श्री सुरेश पांडेय</h3><p>विशेषज्ञता: रुद्राभिषेक, महामृत्युंजय जाप</p><div class="pandit-info">📞 +91 98765 43213</div><div class="pandit-info">🎓 18+ वर्ष अनुभव</div><div class="seva-amount">₹1100 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+      <div class="card pandit-card" onclick="openBookingModal('पंडित श्री विनोद मिश्रा', '🙏', 1100, 'विशेषज्ञता: नामकरण, अन्नप्राशन, कुंडली')"><div class="pandit-img"><img src="https://img.freepik.com/premium-vector/indian-priest-pandit-illustration_1049064-62.jpg" alt="Pandit Ji" onerror="this.src='https://via.placeholder.com/400x400/8B0000/ffcc00?text=Pandit+Ji'"></div><h3>पंडित श्री विनोद मिश्रा</h3><p>विशेषज्ञता: नामकरण, अन्नप्राशन, कुंडली</p><div class="pandit-info">📞 +91 98765 43214</div><div class="pandit-info">🎓 22+ वर्ष अनुभव</div><div class="seva-amount">₹1100 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+      <div class="card pandit-card" onclick="openBookingModal('पंडित श्री अजय शुक्ला', '🙏', 1100, 'विशेषज्ञता: सत्यनारायण कथा, लक्ष्मी पूजा')"><div class="pandit-img"><img src="https://png.pngtree.com/png-vector/20240315/ourmid/pngtree-pandit-ji-vector-png-image_11429759.png" alt="Pandit Ji" onerror="this.src='https://via.placeholder.com/400x400/8B0000/ffcc00?text=Pandit+Ji'"></div><h3>पंडित श्री अजय शुक्ला</h3><p>विशेषज्ञता: सत्यनारायण कथा, लक्ष्मी पूजा</p><div class="pandit-info">📞 +91 98765 43215</div><div class="pandit-info">🎓 12+ वर्ष अनुभव</div><div class="seva-amount">₹1100 से शुरू</div><button class="seva-btn">🙏 बुक करें</button></div>
+    </div>
+  </section>
+
+  <section class="gallery" id="gallery">
+    <h2>🚩 मंदिर गैलरी</h2>
+    <p class="subtitle">भव्य मंदिर की झलकियां</p>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ram_Janmbhoomi_Mandir,_Ayodhya_Dham.jpg" alt="Pran Pratishtha" onerror="this.src='https://via.placeholder.com/600x400/8B0000/ffcc00?text=Pran+Pratishtha'"><div class="caption">🚩 प्राण प्रतिष्ठा समारोह</div></div>
+      <div class="gallery-item"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ayodhya_Ram_Mandir_Inauguration_Day_Picture.jpg" alt="Mandir Inauguration" onerror="this.src='https://via.placeholder.com/600x400/ff6600/ffffff?text=Mandir+Inauguration'"><div class="caption">🛕 मंदिर उद्घाटन दिवस</div></div>
+      <div class="gallery-item"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Shri_Ram_Janambhoomi_Mandir,_Ayodhya_Dham.jpg" alt="Ram Mandir" onerror="this.src='https://via.placeholder.com/600x400/ff9933/8B0000?text=Shree+Ram+Mandir'"><div class="caption">🏛️ श्री राम जन्मभूमि मंदिर</div></div>
+      <div class="gallery-item"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ram_Janmbhoomi_Mandir,_Ayodhya_Dham.jpg" alt="PM Darshan" onerror="this.src='https://via.placeholder.com/600x400/8B0000/ff9933?text=PM+Darshan'"><div class="caption">🙏 प्रधानमंत्री दर्शन</div></div>
+      <div class="gallery-item"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ayodhya_Ram_Mandir_Inauguration_Day_Picture.jpg" alt="Mandir Shikhar" onerror="this.src='https://via.placeholder.com/600x400/ffcc00/8B0000?text=Mandir+Shikhar'"><div class="caption">🔔 मंदिर शिखर</div></div>
+      <div class="gallery-item"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Shri_Ram_Janambhoomi_Mandir,_Ayodhya_Dham.jpg" alt="Ayodhya Dham" onerror="this.src='https://via.placeholder.com/600x400/ff6600/ffcc00?text=Ayodhya+Dham'"><div class="caption">🌸 अयोध्या धाम</div></div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2>संपर्क करें</h2>
+    <p class="subtitle">किसी भी जानकारी के लिए हमें लिखें</p>
+    <form onsubmit="alert('🙏 धन्यवाद! हम आपसे संपर्क करेंगे।'); return false;">
+      <input type="text" placeholder="आपका नाम" required>
+      <input type="email" placeholder="ईमेल" required>
+      <textarea rows="5" placeholder="आपका संदेश" required></textarea>
+      <button type="submit">संदेश भेजें 🙏</button>
+    </form>
+  </section>
+
+  <a href="https://wa.me/918102030400?text=Jai%20Shree%20Ram%20🙏%20Maine%20payment%20kar%20diya%20hai.%20Screenshot%20bhej%20raha%20hoon." class="whatsapp" target="_blank">💬</a>
+
+  <div class="modal" id="sevaModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeSevaModal()">&times;</span>
+      <div class="modal-header"><div class="icon" id="modalIcon">🪔</div><h3 id="modalTitle">बुकिंग</h3><p id="modalDesc">विवरण</p></div>
+      <h4 style="color:#ffcc00; margin-bottom:12px; text-align:center;">राशि चुनें</h4>
+      <div class="modal-amount-options" id="modalAmountOptions"></div>
+      <div style="margin-bottom:15px;"><label style="display:block; color:#ffcc00; margin-bottom:8px; font-weight:bold; font-size:14px;">💰 या अपनी राशि लिखें</label><input type="number" id="sevaCustomAmount" placeholder="जैसे: 100, 500, 1000..." min="1" style="text-align:center; font-weight:bold; font-size:18px;" oninput="updateSevaAmount(this.value)"></div>
+      <input type="text" id="sevaName" placeholder="आपका नाम (Full Name)" required>
+      <input type="email" id="sevaEmail" placeholder="ईमेल (Email)" required>
+      <input type="tel" id="sevaPhone" placeholder="मोबाइल नंबर (10 digits)" pattern="[0-9]{10}" required>
+      <input type="text" id="sevaDate" placeholder="तारीख चुनें (DD/MM/YYYY)" required>
+      <input type="text" id="sevaPujaType" placeholder="पूजा का प्रकार (जैसे: सत्यनारायण कथा)">
+      <input type="text" id="sevaAmount" placeholder="राशि (Amount ₹)" required readonly style="background:#0d0600; color:#ffcc00; font-weight:bold; text-align:center; font-size:18px;">
+      <div class="modal-upi">
+        <h4>💳 UPI से भुगतान करें</h4>
+        <div class="qr-box"><div id="modalQrcode"></div><p style="color:#8B0000; margin-top:8px; font-size:12px; font-weight:bold;">🚩 Shree Ram Mandir Darshan Ayodhya</p><p style="color:#333; font-size:11px; margin-top:3px;">810203040@ybl</p></div>
+        <div class="upi-id-box" style="margin-bottom:15px;"><span class="upi-id" style="font-size:13px; padding:10px 14px;">810203040@ybl</span><button class="copy-btn" style="padding:10px 15px; font-size:13px;" onclick="copyUPIModal()">📋 Copy</button></div>
+        <div class="upi-apps" style="margin-bottom:15px;">
+          <button class="upi-app" style="padding:10px 16px; font-size:13px;" onclick="payWithUPIModal('phonepe')"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/phonepe-logo-icon.png" alt="PhonePe" style="width:20px; height:20px;" onerror="this.style.display='none'">PhonePe</button>
+          <button class="upi-app" style="padding:10px 16px; font-size:13px;" onclick="payWithUPIModal('gpay')"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-pay-icon.png" alt="GPay" style="width:20px; height:20px;" onerror="this.style.display='none'">GPay</button>
+          <button class="upi-app" style="padding:10px 16px; font-size:13px;" onclick="payWithUPIModal('paytm')"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/paytm-icon.png" alt="Paytm" style="width:20px; height:20px;" onerror="this.style.display='none'">Paytm</button>
+          <button class="upi-app" style="padding:10px 16px; font-size:13px;" onclick="payWithUPIModal('any')"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/upi-icon.png" alt="Any UPI" style="width:20px; height:20px;" onerror="this.style.display='none'">Any UPI</button>
+        </div>
+        <button class="pay-upi-btn" onclick="submitSevaPayment()">🚩 UPI से बुक करें</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p class="shlok">"श्री राम जय राम जय जय राम" 🙏</p>
+    <p>© 2025 Shree Ram Mandir Darshan Ayodhya — सभी अधिकार सुरक्षित</p>
+    <div class="socials"><a href="#">📘</a><a href="#">📷</a><a href="#">🐦</a><a href="#">▶️</a></div>
+  </footer>
+
+  <script>
+    const UPI_ID = "810203040@ybl";
+    const PAYEE_NAME = "Shree Ram Mandir Darshan Ayodhya";
+    let currentSeva = { name: '', amount: 0 };
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    function selectAmount(btn, amount) {
+      document.querySelectorAll('.amount-options button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('donorAmount').value = amount;
+      document.getElementById('customAmountInput').value = '';
+      generateQR('qrcode', amount);
+    }
+
+    function updateCustomAmount(value) {
+      const amount = parseInt(value);
+      if (amount && amount > 0) {
+        document.querySelectorAll('.amount-options button').forEach(b => b.classList.remove('active'));
+        document.getElementById('donorAmount').value = amount;
+        generateQR('qrcode', amount);
+      } else { document.getElementById('donorAmount').value = ''; generateQR('qrcode', ''); }
+    }
+
+    function generateQR(containerId, amount) {
+      const qrContainer = document.getElementById(containerId);
+      if (!qrContainer) return;
+      qrContainer.innerHTML = "";
+      const upiLink = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(PAYEE_NAME)}&am=${amount || ''}&cu=INR&tn=${encodeURIComponent('Shree Ram Mandir Darshan Ayodhya')}`;
+      new QRCode(qrContainer, { text: upiLink, width: containerId === 'modalQrcode' ? 170 : 200, height: containerId === 'modalQrcode' ? 170 : 200, colorDark: "#8B0000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
+    }
+    generateQR('qrcode', '');
+
+    function payWithUPI(app) {
+      const amount = document.getElementById('donorAmount').value || '';
+      const name = document.getElementById('donorName').value || 'Devotee';
+      if (!amount || amount <= 0) { alert('⚠️ कृपया पहले राशि चुनें या लिखें।'); return; }
+      
+      if (!isMobile) {
+        alert('📱 Desktop pe UPI app nahi khulta.\n\nKripya mobile se website kholein, ya QR code scan karein.');
+        return;
+      }
+      launchUPI(app, amount, name);
+    }
+
+    function launchUPI(app, amount, name) {
+      const params = `pa=${UPI_ID}&pn=${encodeURIComponent(PAYEE_NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent('Shree Ram Mandir Darshan Ayodhya')}`;
+      let appLink = `upi://pay?${params}`;
+      if (app === 'phonepe') appLink = `phonepe://pay?${params}`;
+      if (app === 'gpay') appLink = `tez://upi/pay?${params}`;
+      if (app === 'paytm') appLink = `paytmmp://pay?${params}`;
+      if (app === 'bhim') appLink = `bhim://pay?${params}`;
+      window.location.href = appLink;
+    }
+
+    function copyUPI() { navigator.clipboard.writeText(UPI_ID).then(() => { alert(`✅ UPI ID copy ho gayi:\n${UPI_ID}\n\n🚩 Shree Ram Mandir Darshan Ayodhya`); }).catch(() => { alert(`UPI ID: ${UPI_ID}`); }); }
+    function copyUPIModal() { navigator.clipboard.writeText(UPI_ID).then(() => { alert(`✅ UPI ID copy ho gayi:\n${UPI_ID}\n\n🚩 Shree Ram Mandir Darshan Ayodhya`); }).catch(() => { alert(`UPI ID: ${UPI_ID}`); }); }
+
+    // ==================== GENERAL DONATION ====================
+    function openPaymentModal() {
+      const name = document.getElementById('donorName').value;
+      const amount = document.getElementById('donorAmount').value;
+      if (!name || !amount || amount <= 0) { alert('⚠️ कृपया पहले अपना नाम और राशि भरें।'); return; }
+      
+      if (isMobile) {
+        payWithUPI('any');
+        setTimeout(() => {
+          alert(`🙏 धन्यवाद ${name}!\n\nआपका ₹${amount} का UPI payment process हो रहा है।\n\n✅ Payment पूरा करने के बाद कृपया WhatsApp पर screenshot भेजें।\n\n🚩 Jai Shree Ram!`);
+        }, 3000);
+      } else {
+        alert('📱 Desktop pe UPI app nahi khulta.\n\nKripya mobile se website kholein ya QR code scan karein.');
+      }
+    }
+
+    // ==================== BOOKING MODAL ====================
+    function openBookingModal(bookingName, icon, baseAmount, description) {
+      currentSeva.name = bookingName; currentSeva.amount = baseAmount;
+      document.getElementById('modalIcon').textContent = icon;
+      document.getElementById('modalTitle').textContent = bookingName;
+      document.getElementById('modalDesc').textContent = description;
+      const amounts = [baseAmount, baseAmount * 2, baseAmount * 5, baseAmount * 10, baseAmount * 21];
+      const amountOptionsDiv = document.getElementById('modalAmountOptions');
+      amountOptionsDiv.innerHTML = '';
+      amounts.forEach((amt, idx) => {
+        const btn = document.createElement('button');
+        btn.textContent = `₹${amt.toLocaleString('en-IN')}`;
+        btn.onclick = function() { selectSevaAmount(this, amt); };
+        if (idx === 0) { btn.classList.add('active'); document.getElementById('sevaAmount').value = amt; }
+        amountOptionsDiv.appendChild(btn);
+      });
+      document.getElementById('sevaName').value = '';
+      document.getElementById('sevaEmail').value = '';
+      document.getElementById('sevaPhone').value = '';
+      document.getElementById('sevaDate').value = '';
+      document.getElementById('sevaPujaType').value = '';
+      document.getElementById('sevaAmount').value = baseAmount;
+      document.getElementById('sevaCustomAmount').value = '';
+      setTimeout(() => { generateQR('modalQrcode', baseAmount); }, 100);
+      document.getElementById('sevaModal').classList.add('active');
+    }
+
+    function selectSevaAmount(btn, amount) {
+      document.querySelectorAll('#modalAmountOptions button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('sevaAmount').value = amount;
+      document.getElementById('sevaCustomAmount').value = '';
+      currentSeva.amount = amount;
+      generateQR('modalQrcode', amount);
+    }
+
+    function updateSevaAmount(value) {
+      const amount = parseInt(value);
+      if (amount && amount > 0) {
+        document.querySelectorAll('#modalAmountOptions button').forEach(b => b.classList.remove('active'));
+        document.getElementById('sevaAmount').value = amount;
+        currentSeva.amount = amount;
+        generateQR('modalQrcode', amount);
+      } else { document.getElementById('sevaAmount').value = ''; generateQR('modalQrcode', ''); }
+    }
+
+    function closeSevaModal() { document.getElementById('sevaModal').classList.remove('active'); }
+
+    function payWithUPIModal(app) {
+      const amount = document.getElementById('sevaAmount').value;
+      const name = document.getElementById('sevaName').value || 'Devotee';
+      if (!amount || amount <= 0) { alert('⚠️ कृपया राशि चुनें।'); return; }
+      if (!isMobile) { alert('📱 Desktop pe UPI app nahi khulta.\n\nKripya mobile se website kholein.'); return; }
+      launchUPI(app, amount, name + ' - ' + currentSeva.name);
+    }
+
+    function submitSevaPayment() {
+      const name = document.getElementById('sevaName').value;
+      const email = document.getElementById('sevaEmail').value;
+      const phone = document.getElementById('sevaPhone').value;
+      const date = document.getElementById('sevaDate').value;
+      const amount = document.getElementById('sevaAmount').value;
+      if (!name || !email || !phone || !date || !amount) { alert('⚠️ कृपया सभी जानकारी भरें।'); return; }
+      
+      if (isMobile) {
+        const bookingDetails = name + ' - ' + currentSeva.name;
+        launchUPI('any', amount, bookingDetails);
+        closeSevaModal();
+        setTimeout(() => {
+          alert(`🙏 धन्यवाद ${name}!\n\nआपकी ${currentSeva.name} की booking ₹${amount} में process हो रही है।\n\n✅ Payment पूरा करने के बाद कृपया WhatsApp पर screenshot भेजें।\n\n🚩 Jai Shree Ram!`);
+        }, 3000);
+      } else {
+        closeSevaModal();
+        alert('📱 Desktop pe UPI app nahi khulta.\n\nKripya mobile se website kholein.');
+      }
+    }
+
+    document.getElementById('sevaModal').addEventListener('click', function(e) { if (e.target === this) closeSevaModal(); });
+  </script>
+
+</body>
+</html>
